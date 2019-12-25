@@ -129,7 +129,6 @@ ltr_view_handler.init = func {
 	me.get_lt_Y = func { return get_lt_prop(lt_Y_name); };
 	me.get_lt_Z = func { return get_lt_prop(lt_Z_name); };
 
-	printf("%s: initialized", script_name);
 };
 
 
@@ -234,8 +233,6 @@ var regviews = func {
 			continue;
 		}
 
-		printf("view %s", view_name);
 		view.manager.register(v.getIndex(), ltr_view_handler);
-		printf("%s: registered '%s'", script_name, view_name);
 	}
 };

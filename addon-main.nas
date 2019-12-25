@@ -33,6 +33,7 @@ var main = func( addon ) {
 
 	fgcommand("gui-redraw");
 
+    # enable persistent settings save into userarchive data
     props.globals.getNode("/sim/linuxtrack/enabled", 1).setAttribute("userarchive", 0);
     props.globals.getNode("/sim/linuxtrack/track-all", 1).setAttribute("userarchive", 0);
     props.globals.getNode("/sim/linuxtrack/track-x", 1).setAttribute("userarchive", 0);
@@ -47,9 +48,5 @@ var main = func( addon ) {
     var init = setlistener("/sim/signals/fdm-initialized", func() {
       removelistener(init); # only call once
 
-      # Must wait some seconds until the objects from view.nas become fully initialized.
-      # TODO: Find a better way for this, maybe by using some property checks.
-      settimer(linuxtrack.regviews, 2);
     });
-
 }
