@@ -23,13 +23,12 @@ var main = func( addon ) {
       enabled : "true",
 	};
 
-    # register in main menu
+    # register in the main menu
     foreach(var item; props.getNode("/sim/menubar/default/menu[1]").getChildren("item")) {
       if (item.getValue("name") == "linuxtrack") {
   		    return;
       }
     }
-
 	props.globals.getNode("/sim/menubar/default/menu[1]").addChild("item").setValues(data);
 
 	fgcommand("gui-redraw");
@@ -48,8 +47,8 @@ var main = func( addon ) {
     var init = setlistener("/sim/signals/fdm-initialized", func() {
       removelistener(init); # only call once
 
-      # Must wait some seconds untill the objects from view.nas become fully initialized.
-      # TODO: Find a better way for this, may be by using some property checks.
+      # Must wait some seconds until the objects from view.nas become fully initialized.
+      # TODO: Find a better way for this, maybe by using some property checks.
       settimer(linuxtrack.regviews, 2);
     });
 

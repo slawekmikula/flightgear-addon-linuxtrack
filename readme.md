@@ -1,39 +1,56 @@
 # About
 
-Flightgear VFR flight helper. Mostly helps with VFR flights offering map, route manager interface and helpers to get quickly to most common settings
+Linuxtrack add-on for FlightGear Flight Simulator. Enables communication with
+Linuxtrack software. It is add-on encapsulation for protocol included in the
+original software https://github.com/uglyDwarf/linuxtrack/tree/master/doc/fgfs
 
-# Running
+# Istallation
 
-- extract zip (if downloaded as a zip) to a given location. For example let's say we have /myfolder/addons/vfrnavigator with contents of the navigator addon.
-- run flightgear with --addon directive. WARNING this is not "additional settings" window in the launcher ! you have to modify windows shortcut or linux startup script for example to looks like this (in linux):
+- extract zip (if downloaded as a zip) to a given location. For example let's
+  say we have /myfolder/addons/thisaddon with contents of this addon.
+- run flightgear with --addon directive or add it in the Launcher application
+  in 'Add-On' section.
 
 Code:
 ```
-    ./fgbin/bin/fgfs --fg-root=./fgdata --launcher --prop:/sim/fg-home=/myfolder/flightgear/fghome --addon="/myfolder/addons/vfrnavigator"
+    ./fgbin/bin/fgfs --fg-root=./fgdata --launcher --prop:/sim/fg-home=/myfolder/flightgear/fghome --addon="/myfolder/addons/thisaddon"
 ```
 
-# Running
+# Usage
 
-In main menu Position -> VFR Starter. When activated small window will appear in the upper right corner with links to most common used functions:
+First configure LinuxTrack with it's GUI configuration. There you can test if
+the selected tracking device is working and save the configuration. After that
+you can run the PIPE software which feeds the data through UDP protocol. Run it
+with `--output-net-udp --format-flightgear` code. Running linuxtrack via helper
+script. It should be saved into e.g. run_ltr.sh script. After running it the
+tracking device should be turned on.
 
-* MP - map - small map in lower left corner with route navigation, access to configuration (config button), zoom settings (buttons +/-) and quick action center on the aircraft (C button). On the bottom you can see information about current waypoint name, bearing (B), distance (D), ETA and wind direction/speed (W).
-* PL - flightplan - in upper left corner
-* SW - stopwatch
-* R - radio panel
-* A - ATC in ranges search
-* RM - route manager activation
+Code:
+```
+ #!/bin/bash
+ PATH=/opt/linuxtrack-0.99.18
+ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PATH/lib/:$PATH/lib/linuxtrack
+ $PATH/bin/ltr_pipe --output-net-udp --format-flightgear
+```
 
+Next start FlightGear. Go to menu `Settings -> Linuxtrack`. There configure
+settings for the UDP protocol. When running with defaults on the same machine
+you can keep the settings not touched. There you can enable linuxtrack protocol.
+After that it should start track head movement. Have fun !
 
 # History
 
-- 1.0.0 - first public version on github
+- 0.0.1 - first public version on github
 
 
 # Authors
 
 - Slawek Mikula - source code
+- uglyDwarf - linuxtrack protocol definition
 
 # Links
+
+- https://github.com/uglyDwarf/linuxtrack - linux head tracking software
 
 # License
 

@@ -1,11 +1,7 @@
 <?xml version="1.0"?>
-
 <PropertyList>
-
 	<generic>
-
 		<input>
-
 			<line_separator>newline</line_separator>
 			<var_separator>tab</var_separator>
 
@@ -15,7 +11,7 @@
 				<node>/sim/linuxtrack/data/h</node>
 			</chunk>
 
-			<chunk>
+            <chunk>
 				<name>pitch</name>
 				<type>float</type>
 				<node>/sim/linuxtrack/data/p</node>
@@ -46,7 +42,5 @@
 			</chunk>
 
 		</input>
-
 	</generic>
-
 </PropertyList>
