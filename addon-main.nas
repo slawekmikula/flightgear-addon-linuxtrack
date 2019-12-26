@@ -9,29 +9,7 @@ var main = func( addon ) {
     var my_addon_id  = "com.slawekmikula.flightgear.LinuxTrack";
     var my_version   = getprop("/addons/by-id/" ~ my_addon_id ~ "/version");
     var my_root_path = getprop("/addons/by-id/" ~ my_addon_id ~ "/path");
-
-    # load dialogs
-    var dialogs   = ["linuxtrack-settings"];
-    forindex (var i; dialogs) {
-      gui.Dialog.new("/sim/gui/dialogs/" ~ dialogs[i] ~ "/dialog", my_root_path ~ "/gui/" ~ dialogs[i] ~ ".xml");
-    }
-
-    var data = {
-	  label   : "LinuxTrack",
-      name    : "linuxtrack",
-      binding : { command : "dialog-show", "dialog-name" : "linuxtrack-settings" },
-      enabled : "true",
-	};
-
-    # register in the main menu
-    foreach(var item; props.getNode("/sim/menubar/default/menu[1]").getChildren("item")) {
-      if (item.getValue("name") == "linuxtrack") {
-  		    return;
-      }
-    }
-	props.globals.getNode("/sim/menubar/default/menu[1]").addChild("item").setValues(data);
-
-	fgcommand("gui-redraw");
+    var my_settings_root_path = "/addons/by-id/" ~ my_addon_id ~ "/addon-devel/";
 
     # enable persistent settings save into userarchive data
     props.globals.getNode("/sim/linuxtrack/enabled", 1).setAttribute("userarchive", 0);
@@ -45,8 +23,37 @@ var main = func( addon ) {
         io.load_nasal( root ~ "/nasal/" ~ f, "linuxtrack" );
     }
 
-    var init = setlistener("/sim/signals/fdm-initialized", func() {
-      removelistener(init); # only call once
+    var initProtocol = func() {
+      var refresh = "1"; # refresh rate
+      var udphost = getprop(my_settings_root_path ~ "udp-host", "localhost");
+      var udpport = getprop(my_settings_root_path ~ "udp-port", "7755");
+      var protocolstring = "generic,socket,in,200,,6543,udp,[addon=" ~ my_addon_id ~ "]/Protocol/linuxtrack";
 
+      fgcommand("add-io-channel",
+        props.Node.new({
+            "config" : protocolstring,
+            "name" : "linuxtrack"
+        })
+      );
+    }
+
+    var init = setlistener("/sim/signals/fdm-initialized", func() {
+        removelistener(init); # only call once
+        initProtocol();
+    });
+
+    var reinit_listener = _setlistener("/sim/signals/reinit", func {
+        removelistener(reinit_listener); # only call once
+        initProtocol();
+    });
+
+    var exit = setlistener("/sim/signals/exit", func() {
+      removelistener(exit); # only call once
+
+      fgcommand("remove-io-channel",
+        props.Node.new({
+            "name" : "linuxtrack"
+        })
+      );
     });
 }
