@@ -216,7 +216,6 @@ var asnum = func(n) {
 	}
 };
 
-
 var regviews = func {
 
 	foreach (var v; view.views) {

@@ -24,18 +24,19 @@ var main = func( addon ) {
     }
 
     var initProtocol = func() {
-      var refresh = "1"; # refresh rate
-      var udphost = getprop(my_settings_root_path ~ "udp-host", "localhost");
-      var udpport = getprop(my_settings_root_path ~ "udp-port", "7755");
-      var protocolstring = "generic,socket,in,200,,6543,udp,[addon=" ~ my_addon_id ~ "]/Protocol/linuxtrack";
+      if (getprop("/sim/linuxtrack/enabled") == 1) {
 
-      fgcommand("add-io-channel",
-        props.Node.new({
-            "config" : protocolstring,
-            "name" : "linuxtrack"
-        })
-      );
-    }
+        var protocolstring = "generic,socket,in,200,,6543,udp,[addon=" ~ my_addon_id ~ "]/Protocol/linuxtrack";
+        fgcommand("add-io-channel",
+          props.Node.new({
+              "config" : protocolstring,
+              "name" : "linuxtrack"
+          })
+        );
+
+        linuxtrack.regviews();
+      }
+    };
 
     var init = setlistener("/sim/signals/fdm-initialized", func() {
         removelistener(init); # only call once
