@@ -232,6 +232,10 @@ var regviews = func {
 			continue;
 		}
 
+        if (num(v.getIndex()) >= 100) {
+            continue;
+        }
+
 		view.manager.register(v.getIndex(), ltr_view_handler);
 	}
 };

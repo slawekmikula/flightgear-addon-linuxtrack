@@ -12,8 +12,18 @@ var main = func( addon ) {
     var my_settings_root_path = "/addons/by-id/" ~ my_addon_id ~ "/addon-devel/";
 
     # enable persistent settings save into userarchive data
-    props.globals.getNode("/sim/linuxtrack/enabled", 1).setAttribute("userarchive", 0);
-    props.globals.getNode("/sim/linuxtrack/track-all", 1).setAttribute("userarchive", 0);
+    var enabledMode = props.globals.getNode("/sim/linuxtrack/enabled", 1);
+    enabledMode.setAttribute("userarchive", "y");
+    if (enabledMode.getValue() == nil) {
+      enabledMode.setValue("true");
+    }
+
+    var trackAll = props.globals.getNode("/sim/linuxtrack/track-all", 1);
+    trackAll.setAttribute("userarchive", "y");
+    if (trackAll.getValue() == nil) {
+      trackAll.setValue("true");
+    }
+
     props.globals.getNode("/sim/linuxtrack/track-x", 1).setAttribute("userarchive", 0);
     props.globals.getNode("/sim/linuxtrack/track-y", 1).setAttribute("userarchive", 0);
     props.globals.getNode("/sim/linuxtrack/track-z", 1).setAttribute("userarchive", 0);
@@ -38,7 +48,7 @@ var main = func( addon ) {
       }
     };
 
-    var init = setlistener("/sim/signals/fdm-initialized", func() {
+    var init = _setlistener("/sim/signals/fdm-initialized", func() {
         removelistener(init); # only call once
         initProtocol();
     });
@@ -48,7 +58,7 @@ var main = func( addon ) {
         initProtocol();
     });
 
-    var exit = setlistener("/sim/signals/exit", func() {
+    var exit = _setlistener("/sim/signals/exit", func() {
       removelistener(exit); # only call once
 
       fgcommand("remove-io-channel",
