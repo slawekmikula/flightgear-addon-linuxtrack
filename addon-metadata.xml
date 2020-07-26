@@ -27,6 +27,18 @@
             This add-on integrated LinuxTrack head tracking
         </long-description>
 
+        <localized>
+            <pl>
+                <short-description type="string">
+                    Rozszerzenie LinuxTrack
+                </short-description>
+
+                <long-description type="string">
+                    To rozszerzenie integruje śledzenie ruchów głowy za pomocą aplikacji LinuxTrack
+                </long-description>
+            </pl>
+        </localized>
+
         <license>
             <designation type="string">
                 GNU GPL version 2 or later
@@ -45,16 +57,12 @@
         <max-FG-version type="string">none</max-FG-version>
 
         <urls>
-            <home-page type="string">
-        <![CDATA[ https://forum.flightgear.org/viewtopic.php?f=0&t=0 ]]>
-            </home-page>
-
             <download type="string">
                 https://github.com/slawekmikula/fg-addon-linuxtrack/download
             </download>
 
             <support type="string">
-                http://wiki.flightgear.org/addon-linuxtrack
+                https://github.com/slawekmikula/fg-addon-linuxtrack/issues
             </support>
 
             <code-repository type="string">

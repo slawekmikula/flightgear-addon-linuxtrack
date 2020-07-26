@@ -6,10 +6,6 @@
 
 var main = func( addon ) {
     var root = addon.basePath;
-    var my_addon_id  = "com.slawekmikula.flightgear.LinuxTrack";
-    var my_version   = getprop("/addons/by-id/" ~ my_addon_id ~ "/version");
-    var my_root_path = getprop("/addons/by-id/" ~ my_addon_id ~ "/path");
-    var my_settings_root_path = "/addons/by-id/" ~ my_addon_id ~ "/addon-devel/";
 
     # enable persistent settings save into userarchive data
     var enabledMode = props.globals.getNode("/sim/linuxtrack/enabled", 1);
@@ -36,7 +32,7 @@ var main = func( addon ) {
     var initProtocol = func() {
       if (getprop("/sim/linuxtrack/enabled") == 1) {
 
-        var protocolstring = "generic,socket,in,200,,6543,udp,[addon=" ~ my_addon_id ~ "]/Protocol/linuxtrack";
+        var protocolstring = "generic,socket,in,200,,6543,udp,linuxtrack";
         fgcommand("add-io-channel",
           props.Node.new({
               "config" : protocolstring,
