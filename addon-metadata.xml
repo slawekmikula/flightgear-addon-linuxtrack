@@ -9,48 +9,38 @@
     <addon>
         <identifier type="string">com.slawekmikula.flightgear.LinuxTrack</identifier>
         <name type="string">LinuxTrack</name>
-        <version type="string">1.0.0</version>
+        <version type="string">0.0.1</version>
 
         <authors>
             <author>
                 <name type="string">slawekmikula from the FlightGear forum</name>
-                <email type="string"></email>
+                <email type="string">slawek.mikula@gmail.com</email>
                 <url type="string"></url>
             </author>
         </authors>
 
-        <short-description type="string">
-            LinuxTrack addon
-        </short-description>
+        <maintainers>
+            <maintainer>
+                <name type="string">slawekmikula from the FlightGear forum</name>
+                <email type="string">slawek.mikula@gmail.com</email>
+                <url type="string"></url>
+            </maintainer>
+        </maintainers>
 
-        <long-description type="string">
-            This add-on integrated LinuxTrack head tracking
-        </long-description>
+        <short-description type="string">LinuxTrack addon</short-description>
+        <long-description type="string">This add-on integrated LinuxTrack head tracking</long-description>
 
         <localized>
             <pl>
-                <short-description type="string">
-                    Rozszerzenie LinuxTrack
-                </short-description>
-
-                <long-description type="string">
-                    To rozszerzenie integruje śledzenie ruchów głowy za pomocą aplikacji LinuxTrack
-                </long-description>
+                <short-description type="string">Rozszerzenie LinuxTrack</short-description>
+                <long-description type="string">To rozszerzenie integruje śledzenie ruchów głowy za pomocą aplikacji LinuxTrack</long-description>
             </pl>
         </localized>
 
         <license>
-            <designation type="string">
-                GNU GPL version 2 or later
-            </designation>
-
-            <file type="string">
-                LICENSE
-            </file>
-
-            <url type="string">
-                https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
-            </url>
+            <designation type="string">GNU GPL version 2 or later</designation>
+            <file type="string">LICENSE</file>
+            <url type="string">https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html</url>
         </license>
 
         <min-FG-version type="string">2018.3.0</min-FG-version>

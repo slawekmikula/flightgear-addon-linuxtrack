@@ -206,7 +206,7 @@ ltr_view_handler.init_settings = func {
 	me.track_X  = props.globals.getNode(lt_tree ~ "/track-x", 0);
 	me.track_Y  = props.globals.getNode(lt_tree ~ "/track-y", 0);
 	me.track_Z  = props.globals.getNode(lt_tree ~ "/track-z", 0);
-}
+};
 
 var asnum = func(n) {
 	if(typeof(n) == "scalar") {

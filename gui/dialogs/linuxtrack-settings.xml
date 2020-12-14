@@ -42,7 +42,6 @@
 		<halign>left</halign>
 		<label>Enable LinuxTrack</label>
 		<property>/sim/linuxtrack/enabled</property>
-		<live>true</live>
 		<binding>
 			<command>dialog-apply</command>
 		</binding>
@@ -52,7 +51,6 @@
 		<halign>left</halign>
 		<label>Track ALL</label>
 		<property>/sim/linuxtrack/track-all</property>
-		<live>true</live>
 		<binding>
 			<command>dialog-apply</command>
 		</binding>
@@ -62,7 +60,6 @@
 		<halign>left</halign>
 		<label>Track X Axis</label>
 		<property>/sim/linuxtrack/track-x</property>
-		<live>true</live>
 		<binding>
 			<command>dialog-apply</command>
 		</binding>
@@ -72,7 +69,6 @@
 		<halign>left</halign>
 		<label>Track Y Axis</label>
 		<property>/sim/linuxtrack/track-y</property>
-		<live>true</live>
 		<binding>
 			<command>dialog-apply</command>
 		</binding>
@@ -82,7 +78,6 @@
 		<halign>left</halign>
 		<label>Track Z Axis</label>
 		<property>/sim/linuxtrack/track-z</property>
-		<live>true</live>
 		<binding>
 			<command>dialog-apply</command>
 		</binding>

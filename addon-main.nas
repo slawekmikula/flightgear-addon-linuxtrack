@@ -11,18 +11,18 @@ var main = func( addon ) {
     var enabledMode = props.globals.getNode("/sim/linuxtrack/enabled", 1);
     enabledMode.setAttribute("userarchive", "y");
     if (enabledMode.getValue() == nil) {
-      enabledMode.setValue("true");
+      enabledMode.setValue(1);
     }
 
     var trackAll = props.globals.getNode("/sim/linuxtrack/track-all", 1);
     trackAll.setAttribute("userarchive", "y");
     if (trackAll.getValue() == nil) {
-      trackAll.setValue("true");
+      trackAll.setValue(1);
     }
 
-    props.globals.getNode("/sim/linuxtrack/track-x", 1).setAttribute("userarchive", 0);
-    props.globals.getNode("/sim/linuxtrack/track-y", 1).setAttribute("userarchive", 0);
-    props.globals.getNode("/sim/linuxtrack/track-z", 1).setAttribute("userarchive", 0);
+    props.globals.getNode("/sim/linuxtrack/track-x", 1).setAttribute("userarchive", "y");
+    props.globals.getNode("/sim/linuxtrack/track-y", 1).setAttribute("userarchive", "y");
+    props.globals.getNode("/sim/linuxtrack/track-z", 1).setAttribute("userarchive", "y");
 
     # load scripts
     foreach(var f; ['linuxtrack.nas'] ) {
@@ -30,8 +30,6 @@ var main = func( addon ) {
     }
 
     var initProtocol = func() {
-      if (getprop("/sim/linuxtrack/enabled") == 1) {
-
         var protocolstring = "generic,socket,in,200,,6543,udp,linuxtrack";
         fgcommand("add-io-channel",
           props.Node.new({
@@ -41,26 +39,42 @@ var main = func( addon ) {
         );
 
         linuxtrack.regviews();
-      }
     };
+
+    var shutdownProtocol = func() {
+        fgcommand("remove-io-channel",
+          props.Node.new({
+              "name" : "linuxtrack"
+          })
+        );
+    }
+
+    var init = _setlistener("/sim/linuxtrack/enabled", func() {
+        if (getprop("/sim/linuxtrack/enabled") == 1) {
+            initProtocol();
+        } else {
+            shutdownProtocol();
+        }
+    });
 
     var init = _setlistener("/sim/signals/fdm-initialized", func() {
         removelistener(init); # only call once
-        initProtocol();
+        if (getprop("/sim/linuxtrack/enabled") == 1) {
+            initProtocol();
+        }
     });
 
     var reinit_listener = _setlistener("/sim/signals/reinit", func {
         removelistener(reinit_listener); # only call once
-        initProtocol();
+        if (getprop("/sim/linuxtrack/enabled") == 1) {
+            initProtocol();
+        }
     });
 
     var exit = _setlistener("/sim/signals/exit", func() {
-      removelistener(exit); # only call once
-
-      fgcommand("remove-io-channel",
-        props.Node.new({
-            "name" : "linuxtrack"
-        })
-      );
+        removelistener(exit); # only call once
+        if (getprop("/sim/linuxtrack/enabled") == 0) {
+            shutdownProtocol();
+        }
     });
 }
