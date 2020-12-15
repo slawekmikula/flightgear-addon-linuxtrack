@@ -239,3 +239,7 @@ var regviews = func {
 		view.manager.register(v.getIndex(), ltr_view_handler);
 	}
 };
+
+var reinit = func {
+    ltr_view_handler.init_settings();
+};

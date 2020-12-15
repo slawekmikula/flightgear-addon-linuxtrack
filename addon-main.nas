@@ -6,6 +6,7 @@
 
 var main = func( addon ) {
     var root = addon.basePath;
+    var protocolInitialized = 0;
 
     # enable persistent settings save into userarchive data
     var enabledMode = props.globals.getNode("/sim/linuxtrack/enabled", 1);
@@ -30,28 +31,35 @@ var main = func( addon ) {
     }
 
     var initProtocol = func() {
-        var protocolstring = "generic,socket,in,200,,6543,udp,linuxtrack";
-        fgcommand("add-io-channel",
-          props.Node.new({
-              "config" : protocolstring,
-              "name" : "linuxtrack"
-          })
-        );
+        if (protocolInitialized == 0) {
+            var protocolstring = "generic,socket,in,200,,6543,udp,linuxtrack";
+            fgcommand("add-io-channel",
+              props.Node.new({
+                  "config" : protocolstring,
+                  "name" : "linuxtrack"
+              })
+            );
 
-        linuxtrack.regviews();
+            linuxtrack.regviews();
+            protocolInitialized = 1;
+        }
     };
 
     var shutdownProtocol = func() {
-        fgcommand("remove-io-channel",
-          props.Node.new({
-              "name" : "linuxtrack"
-          })
-        );
+        if (protocolInitialized == 1) {
+            fgcommand("remove-io-channel",
+              props.Node.new({
+                  "name" : "linuxtrack"
+              })
+            );
+            protocolInitialized = 0;
+        }
     }
 
     var init = _setlistener("/sim/linuxtrack/enabled", func() {
         if (getprop("/sim/linuxtrack/enabled") == 1) {
             initProtocol();
+            linuxtrack.reinit();
         } else {
             shutdownProtocol();
         }
